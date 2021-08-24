@@ -360,7 +360,7 @@ Changes are ignored on update. This part isn't reread on refresh. To manage inte
  
 ~> **Note:** Managing disks in VM is possible only when VDC fast provisioned is disabled.
 
-* `bus_type` - (Required) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`. 
+* `bus_type` - (Required) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`, `nvme`. **Note** `nvme` is supported in VCD 10.2.1+
 * `size_in_mb` - (Required) The size of the disk in MB. 
 * `bus_number` - (Required) The number of the SCSI or IDE controller itself.
 * `unit_number` - (Required) The device number on the SCSI or IDE controller of the disk.
@@ -549,7 +549,7 @@ The following additional attributes are exported:
 ## Internal disk
 
 * `disk_id` - (*v2.7+*) Specifies a unique identifier for this disk in the scope of the corresponding VM.
-* `bus_type` - (*v2.7+*) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`. 
+* `bus_type` - (*v2.7+*) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`, `nvme`.
 * `size_in_mb` - (*v2.7+*) The size of the disk in MB. 
 * `bus_number` - (*v2.7+*) The number of the SCSI or IDE controller itself.
 * `unit_number` - (*v2.7+*) The device number on the SCSI or IDE controller of the disk.

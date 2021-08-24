@@ -185,7 +185,7 @@ func vcdVmDS(vmType typeOfVm) map[string]*schema.Schema {
 				"bus_type": {
 					Type:        schema.TypeString,
 					Computed:    true,
-					Description: "The type of disk controller. Possible values: ide, parallel( LSI Logic Parallel SCSI), sas(LSI Logic SAS (SCSI)), paravirtual(Paravirtual (SCSI)), sata",
+					Description: "The type of disk controller. Possible values: ide, parallel( LSI Logic Parallel SCSI), sas(LSI Logic SAS (SCSI)), paravirtual(Paravirtual (SCSI)), sata, nvme",
 				},
 				"size_in_mb": {
 					Type:        schema.TypeInt,

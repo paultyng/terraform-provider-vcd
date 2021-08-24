@@ -4,9 +4,10 @@ package vcd
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"regexp"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
@@ -360,5 +361,83 @@ resource "vcd_vm_internal_disk" "{{.DiskResourceName}}_ide" {
   unit_number     = "0"
   storage_profile = "{{.StorageProfileName}}"
   allow_vm_reboot = "true"
+}
+`
+
+// TestAccVcdVmInternalDiskNvme explicitly tests NVMe disk support.
+// It was introduced in VCD 10.2.1 and cannot be tested in earlier versions
+func TestAccVcdVmInternalDiskNvme(t *testing.T) {
+	preTestChecks(t)
+
+	if vcdShortTest {
+		t.Skip(acceptanceTestsSkipped)
+		return
+	}
+
+	// NVM devices are in VCD starting with version 10.2.1
+	client := createTemporaryVCDConnection()
+	if client.Client.APIVCDMaxVersionIs("< 35.1") {
+		t.Skip("NVMe drive support was only introduced in VCD 10.2.1")
+	}
+
+	var params = StringMap{
+		"Org":      testConfig.VCD.Org,
+		"Vdc":      testConfig.VCD.Vdc,
+		"FuncName": "TestVappVmDS",
+		"Tags":     "vm",
+		"BusType":  "nvme",
+		"VmName":   t.Name() + "-vm",
+	}
+	configTextNvme := templateFill(sourceTestVmInternalDiskOrgVdcAndVMNvme, params)
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testAccProviders,
+		CheckDestroy: resource.ComposeTestCheckFunc(
+			testAccCheckVcdStandaloneVmDestroy(params["VmName"].(string), params["Org"].(string), params["Vdc"].(string)),
+		),
+		Steps: []resource.TestStep{
+			resource.TestStep{
+				Config: configTextNvme,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("vcd_vm.nvme", "id"),
+					resource.TestCheckResourceAttrSet("vcd_vm_internal_disk.nvme", "id"),
+					resource.TestCheckResourceAttr("vcd_vm_internal_disk.nvme", "bus_type", "nvme"),
+				),
+			},
+		},
+	})
+	postTestChecks(t)
+}
+
+const sourceTestVmInternalDiskOrgVdcAndVMNvme = `
+resource "vcd_vm" "nvme" {
+  org = "{{.Org}}"
+  vdc = "{{.Vdc}}"
+
+  power_on  = false
+  name      = "{{.VmName}}"
+  memory    = 512
+  cpus      = 2
+  cpu_cores = 1
+
+  os_type          = "windows9Server64Guest"
+  hardware_version = "vmx-18"
+  computer_name    = "compName"
+}
+
+resource "vcd_vm_internal_disk" "nvme" {
+  org = "{{.Org}}"
+  vdc = "{{.Vdc}}"
+
+  vapp_name       = vcd_vm.nvme.vapp_name
+  vm_name         = vcd_vm.nvme.name
+  bus_type        = "nvme"
+  size_in_mb      = "100"
+  bus_number      = "1"
+  unit_number     = "0"
+  allow_vm_reboot = "false"
+
+  depends_on = [vcd_vm.nvme]
 }
 `

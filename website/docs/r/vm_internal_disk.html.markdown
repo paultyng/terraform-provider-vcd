@@ -43,7 +43,7 @@ The following arguments are supported:
 * `vapp_name` - (Required) The vAPP this VM internal disk belongs to.
 * `vm_name` - (Required) VM in vAPP in which internal disk is created.
 * `allow_vm_reboot` - (Optional) Powers off VM when changing any attribute of an IDE disk or unit/bus number of other disk types, after the change is complete VM is powered back on. Without this setting enabled, such changes on a powered-on VM would fail. Defaults to false.
-* `bus_type` - (Required) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`. 
+* `bus_type` - (Required) The type of disk controller. Possible values: `ide`, `parallel`( LSI Logic Parallel SCSI), `sas`(LSI Logic SAS (SCSI)), `paravirtual`(Paravirtual (SCSI)), `sata`, `nvme`. **Note** `nvme` is supported in VCD 10.2.1+
 * `size_in_mb` - (Required) The size of the disk in MB. 
 * `bus_number` - (Required) The number of the SCSI or IDE controller itself.
 * `unit_number` - (Required) The device number on the SCSI or IDE controller of the disk.
