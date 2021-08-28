@@ -30,24 +30,24 @@ data "vcd_external_network_v2" "nsxt-ext-net" {
 }
 
 resource "vcd_nsxt_edgegateway" "nsxt-edge" {
-  org                     = "my-org"
-  vdc                     = "nsxt-vdc"
-  name                    = "nsxt-edge"
-  description             = "Description"
+  org         = "my-org"
+  vdc         = "nsxt-vdc"
+  name        = "nsxt-edge"
+  description = "Description"
 
   external_network_id = data.vcd_external_network_v2.nsxt-ext-net.id
 
   subnet {
-     gateway               = "10.150.191.253"
-     prefix_length         = "19"
-     # primary_ip should fall into defined "allocated_ips" range as otherwise
-     # next apply will report additional range of "allocated_ips" with the range
-     # containing single "primary_ip" and will cause non-empty plan.
-     primary_ip            = "10.150.160.137"
-     allocated_ips {
-       start_address = "10.150.160.137"
-       end_address   = "10.150.160.138"
-     }
+    gateway       = "10.150.191.253"
+    prefix_length = "19"
+    # primary_ip should fall into defined "allocated_ips" range as otherwise
+    # next apply will report additional range of "allocated_ips" with the range
+    # containing single "primary_ip" and will cause non-empty plan.
+    primary_ip = "10.150.160.137"
+    allocated_ips {
+      start_address = "10.150.160.137"
+      end_address   = "10.150.160.138"
+    }
   }
 }
 ```
@@ -65,58 +65,58 @@ data "vcd_external_network_v2" "nsxt-ext-net" {
 }
 
 resource "vcd_nsxt_edgegateway" "nsxt-edge" {
-  org                     = "my-org"
-  vdc                     = "nsxt-vdc"
-  name                    = "nsxt-edge"
-  description             = "Description"
+  org         = "my-org"
+  vdc         = "nsxt-vdc"
+  name        = "nsxt-edge"
+  description = "Description"
 
-  external_network_id = data.vcd_external_network_v2.nsxt-ext-net.id
+  external_network_id       = data.vcd_external_network_v2.nsxt-ext-net.id
   dedicate_external_network = true
 
   # Custom edge cluster reference
   edge_cluster_id = data.vcd_nsxt_edge_cluster.secondary.id
 
   subnet {
-     gateway               = "10.150.191.253"
-     prefix_length         = "19"
-     # primary_ip should fall into defined "allocated_ips" range as otherwise
-     # next apply will report additional range of "allocated_ips" with the range
-     # containing single "primary_ip" and will cause non-empty plan.
-     primary_ip            = "10.150.160.137"
-     allocated_ips {
-       start_address = "10.150.160.137"
-       end_address   = "10.150.160.137"
-     }
+    gateway       = "10.150.191.253"
+    prefix_length = "19"
+    # primary_ip should fall into defined "allocated_ips" range as otherwise
+    # next apply will report additional range of "allocated_ips" with the range
+    # containing single "primary_ip" and will cause non-empty plan.
+    primary_ip = "10.150.160.137"
+    allocated_ips {
+      start_address = "10.150.160.137"
+      end_address   = "10.150.160.137"
+    }
   }
 
   subnet {
-     gateway       = "77.77.77.1"
-     prefix_length = "26"
+    gateway       = "77.77.77.1"
+    prefix_length = "26"
 
-     allocated_ips {
-       start_address = "77.77.77.10"
-       end_address   = "77.77.77.12"
-     }
+    allocated_ips {
+      start_address = "77.77.77.10"
+      end_address   = "77.77.77.12"
+    }
   }
 
   subnet {
-     gateway       = "88.88.88.1"
-     prefix_length = "24"
+    gateway       = "88.88.88.1"
+    prefix_length = "24"
 
-     allocated_ips {
-       start_address = "88.88.88.91"
-       end_address   = "88.88.88.92"
-     }
+    allocated_ips {
+      start_address = "88.88.88.91"
+      end_address   = "88.88.88.92"
+    }
 
-     allocated_ips {
-       start_address = "88.88.88.94"
-       end_address   = "88.88.88.95"
-     }
+    allocated_ips {
+      start_address = "88.88.88.94"
+      end_address   = "88.88.88.95"
+    }
 
-     allocated_ips {
-       start_address = "88.88.88.97"
-       end_address   = "88.88.88.98"
-     }
+    allocated_ips {
+      start_address = "88.88.88.97"
+      end_address   = "88.88.88.98"
+    }
   }
 }
 ```
@@ -172,21 +172,21 @@ For example, using this structure, representing an edge gateway that was **not**
 
 ```hcl
 resource "vcd_nsxt_edgegateway" "nsxt-edge" {
-  org                     = "my-org"
-  vdc                     = "nsxt-vdc"
-  name                    = "nsxt-edge"
-  description             = "Description"
+  org         = "my-org"
+  vdc         = "nsxt-vdc"
+  name        = "nsxt-edge"
+  description = "Description"
 
   external_network_id = data.vcd_external_network_v2.nsxt-ext-net.id
 
   subnet {
-     gateway               = "10.10.10.1"
-     prefix_length         = "24"
-     primary_ip            = "10.10.10.10"
-     allocated_ips {
-       start_address = "10.10.10.10"
-       end_address   = "10.10.10.30"
-     }
+    gateway       = "10.10.10.1"
+    prefix_length = "24"
+    primary_ip    = "10.10.10.10"
+    allocated_ips {
+      start_address = "10.10.10.10"
+      end_address   = "10.10.10.30"
+    }
   }
 }
 ```

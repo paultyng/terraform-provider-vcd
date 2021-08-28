@@ -17,10 +17,10 @@ Supported in provider *v2.5+*
 
 ```hcl
 data "vcd_independent_disk" "existing-disk" {
-  org     = "my-org"
-  vdc     = "my-vdc"
-  id      = "urn:vcloud:disk:1bbc273d-7701-4f06-97be-428b46b0805e"
-  name    = "my-disk"
+  org  = "my-org"
+  vdc  = "my-vdc"
+  id   = "urn:vcloud:disk:1bbc273d-7701-4f06-97be-428b46b0805e"
+  name = "my-disk"
 }
 output "disk-iops" {
   value = data.vcd_independent_disk.existing-disk.iops

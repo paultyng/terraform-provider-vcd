@@ -24,7 +24,7 @@ data "vcd_network_isolated" "net" {
   org = "my-org" # Optional
   vdc = "my-vdc" # Optional
 
-  name    = "my-net"
+  name = "my-net"
 }
 
 output "gateway" {

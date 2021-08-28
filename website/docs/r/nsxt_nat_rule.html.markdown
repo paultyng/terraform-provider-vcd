@@ -23,8 +23,8 @@ environment, you always configure the rule from the perspective of your organiza
 
 ```hcl
 resource "vcd_nsxt_nat_rule" "snat" {
-  org  = "dainius"
-  vdc  = "nsxt-vdc-dainius"
+  org = "dainius"
+  vdc = "nsxt-vdc-dainius"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 
@@ -36,15 +36,15 @@ resource "vcd_nsxt_nat_rule" "snat" {
   external_address         = tolist(data.vcd_nsxt_edgegateway.existing.subnet)[0].primary_ip
   internal_address         = "11.11.11.0/24"
   snat_destination_address = "8.8.8.8"
-  logging = true
+  logging                  = true
 }
 ```
 
 ## Example Usage 2 (Prevent SNAT for internal addresses in subnet 11.11.11.0/24)
 ```hcl
 resource "vcd_nsxt_nat_rule" "no-snat" {
-  org  = "dainius"
-  vdc  = "nsxt-vdc-dainius"
+  org = "dainius"
+  vdc = "nsxt-vdc-dainius"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 

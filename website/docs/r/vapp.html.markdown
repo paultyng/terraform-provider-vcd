@@ -29,19 +29,19 @@ resource "vcd_vapp" "web" {
 }
 
 resource "vcd_vapp_org_network" "direct-network" {
-  vapp_name         = vcd_vapp.web.name
-  org_network_name  = vcd_network_direct.direct-network.name
+  vapp_name        = vcd_vapp.web.name
+  org_network_name = vcd_network_direct.direct-network.name
 }
 
 resource "vcd_vapp_vm" "web1" {
-  vapp_name     = vcd_vapp.web.name
-  name          = "web1"
+  vapp_name = vcd_vapp.web.name
+  name      = "web1"
 
   catalog_name  = "my-catalog"
   template_name = "photon-os"
 
-  memory        = 2048
-  cpus          = 1
+  memory = 2048
+  cpus   = 1
 
   network {
     type               = "org"
@@ -50,20 +50,20 @@ resource "vcd_vapp_vm" "web1" {
   }
 
   guest_properties = {
-    "vapp.property1"   = "value1"
-    "vapp.property2"   = "value2"
+    "vapp.property1" = "value1"
+    "vapp.property2" = "value2"
   }
 }
 
 resource "vcd_vapp_vm" "web2" {
-  vapp_name     = vcd_vapp.web.name
-  name          = "web2"
+  vapp_name = vcd_vapp.web.name
+  name      = "web2"
 
   catalog_name  = "my-catalog"
   template_name = "photon-os"
 
-  memory        = 2048
-  cpus          = 1
+  memory = 2048
+  cpus   = 1
 
   network {
     type               = "org"
@@ -116,9 +116,9 @@ For example, using this structure, representing a vApp that was **not** created 
 
 ```hcl
 resource "vcd_vapp" "tf-vapp" {
-  name              = "my-vapp"
-  org               = "my-org"
-  vdc               = "my-vdc"
+  name = "my-vapp"
+  org  = "my-org"
+  vdc  = "my-vdc"
 }
 ```
 

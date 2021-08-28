@@ -78,7 +78,7 @@ resource "vcd_catalog" "my-catalog" {
 
 You can import such catalog into terraform state using this command
 
-```
+```bash
 terraform import vcd_catalog.my-catalog my-org.my-catalog
 ```
 

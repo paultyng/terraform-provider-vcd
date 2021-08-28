@@ -26,10 +26,9 @@ resource "vcd_catalog_item" "myNewCatalogItem" {
   show_upload_progress = true
 
   metadata = {
-    license = "public"    
+    license = "public"
     version = "v1"
-  }  
-
+  }
 }
 ```
 
@@ -56,10 +55,10 @@ catalog item. For example, using this structure, representing an existing catalo
 
 ```hcl
 resource "vcd_catalog_item" "my-item" {
-  org         = "my-org"
-  catalog     = "my-catalog"
-  name        = "my-item"
-  ova_path    = "guess"
+  org      = "my-org"
+  catalog  = "my-catalog"
+  name     = "my-item"
+  ova_path = "guess"
 }
 ```
 

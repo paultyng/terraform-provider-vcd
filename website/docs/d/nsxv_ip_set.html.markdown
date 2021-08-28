@@ -17,8 +17,8 @@ Supported in provider *v2.6+*
 
 ```hcl
 data "vcd_nsxv_ip_set" "ip-set DS" {
-  org                 = "my-org"
-  vdc                 = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
   name = "not-managed"
 }

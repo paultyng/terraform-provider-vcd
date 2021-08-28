@@ -19,8 +19,8 @@ Supported in provider *v2.2+*
 
 ```hcl
 provider "vcd" {
-  user     = "${var.admin_user}"
-  password = "${var.admin_password}"
+  user     = var.admin_user
+  password = var.admin_password
   org      = "System"
   url      = "https://Vcd/api"
 }
@@ -70,7 +70,7 @@ resource "vcd_external_network" "net" {
   # It's possible to define more than one vSphere network
   vsphere_network {
     name    = "myNetwork2"
-    type    = "DV_PORTGROUP"    
+    type    = "DV_PORTGROUP"
     vcenter = "vcenter-name2"
   }
 
@@ -81,9 +81,8 @@ resource "vcd_network_direct" "net" {
   org              = "my-org"
   vdc              = "my-vdc"
   name             = "my-net"
-  external_network = "${vcd_external_network.net.name}"
+  external_network = vcd_external_network.net.name
 }
-
 ```
 
 ## Argument Reference
@@ -132,7 +131,7 @@ For example, using this structure, representing an existing external network tha
 
 ```hcl
 resource "vcd_external_network" "tf-external-network" {
-  name             = "my-ext-net"
+  name = "my-ext-net"
 }
 ```
 

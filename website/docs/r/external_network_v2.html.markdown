@@ -61,7 +61,7 @@ resource "vcd_external_network_v2" "ext-net-nsxt" {
       start_address = "14.14.14.10"
       end_address   = "14.14.14.15"
     }
-    
+
     static_ip_pool {
       start_address = "14.14.14.20"
       end_address   = "14.14.14.25"
@@ -86,8 +86,8 @@ resource "vcd_external_network_v2" "ext-net-nsxv" {
   description = "NSX-V based external network"
 
   vsphere_network {
-    vcenter_id     = data.vcd_vcenter.vc.id
-    portgroup_id   = data.vcd_portgroup.sw.id
+    vcenter_id   = data.vcd_vcenter.vc.id
+    portgroup_id = data.vcd_portgroup.sw.id
   }
 
   ip_scope {

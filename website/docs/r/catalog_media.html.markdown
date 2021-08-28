@@ -24,12 +24,11 @@ resource "vcd_catalog_media" "myNewMedia" {
   media_path           = "/home/user/file.iso"
   upload_piece_size    = 10
   show_upload_progress = true
-  
-  metadata = {
-    license = "public"    
-    version = "v1"
-  }  
 
+  metadata = {
+    license = "public"
+    version = "v1"
+  }
 }
 ```
 

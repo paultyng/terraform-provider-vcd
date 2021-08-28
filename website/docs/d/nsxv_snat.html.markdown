@@ -18,9 +18,9 @@ read existing rule by ID and use its attributes in other resources.
 
 ```hcl
 data "vcd_nsxv_snat" "my-rule" {
-  org                 = "my-org"
-  vdc                 = "my-org-vdc"
-  edge_gateway        = "my-edge-gw"
+  org          = "my-org"
+  vdc          = "my-org-vdc"
+  edge_gateway = "my-edge-gw"
 
   rule_id = "197867"
 }

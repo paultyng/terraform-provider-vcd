@@ -32,7 +32,7 @@ resource "vcd_network_routed_v2" "parent-network" {
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 
-  gateway = "7.1.1.1"
+  gateway       = "7.1.1.1"
   prefix_length = 24
 
   static_ip_pool {
@@ -43,7 +43,7 @@ resource "vcd_network_routed_v2" "parent-network" {
 
 resource "vcd_nsxt_network_dhcp" "pools" {
   org_network_id = vcd_network_routed_v2.parent-network.id
-  
+
   pool {
     start_address = "7.1.1.100"
     end_address   = "7.1.1.110"

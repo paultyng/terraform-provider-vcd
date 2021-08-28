@@ -21,7 +21,7 @@ data "vcd_vm_sizing_policy" "tf-policy-name" {
   name = "my-rule"
 }
 output "policyId" {
-	value = data.vcd_vm_sizing_policy.tf-policy-name.id
+  value = data.vcd_vm_sizing_policy.tf-policy-name.id
 }
 ```
 ## Argument Reference

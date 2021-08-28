@@ -36,7 +36,7 @@ resource "vcd_nsxv_dnat" "web" {
 resource "vcd_nsxv_dnat" "forIcmp" {
   org = "my-org" # Optional
   vdc = "my-vdc" # Optional
-  
+
   edge_gateway = "Edge Gateway Name"
   network_name = "my-external-network"
   network_type = "ext"
@@ -54,17 +54,17 @@ resource "vcd_nsxv_dnat" "forIcmp" {
 resource "vcd_nsxv_dnat" "dnat-tcp" {
   org = "my-org" # Optional
   vdc = "my-vdc" # Optional
-  
+
   edge_gateway = "Edge Gateway Name"
   network_name = "my-external-network"
   network_type = "ext"
 
-  enabled = false
+  enabled         = false
   logging_enabled = true
-  description = "My DNAT rule"
+  description     = "My DNAT rule"
 
-  original_address   = "78.101.10.20"
-  original_port      = 443
+  original_address = "78.101.10.20"
+  original_port    = 443
 
   translated_address = "10.10.0.5"
   translated_port    = 8443

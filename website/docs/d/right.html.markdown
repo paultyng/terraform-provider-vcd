@@ -16,11 +16,11 @@ Supported in provider *v3.3+*
 
 ```hcl
 data "vcd_right" "some-right" {
-	name = "Catalog: Add vApp from My Cloud"
+  name = "Catalog: Add vApp from My Cloud"
 }
 
 output "some-right" {
- value = data.vcd_right.some-right
+  value = data.vcd_right.some-right
 }
 ```
 

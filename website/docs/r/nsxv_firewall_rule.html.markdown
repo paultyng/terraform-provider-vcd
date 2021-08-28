@@ -18,9 +18,9 @@ used to create, modify, and delete firewall rules.
 
 ```hcl
 data "vcd_edgegateway" "mygw" {
-  org          = "my-org"
-  vdc          = "my-vdc"
-  name         = "my-edge-gateway-name"
+  org  = "my-org"
+  vdc  = "my-vdc"
+  name = "my-edge-gateway-name"
 }
 
 resource "vcd_nsxv_firewall_rule" "my-rule-1" {

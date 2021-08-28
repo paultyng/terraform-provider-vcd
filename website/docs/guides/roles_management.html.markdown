@@ -180,16 +180,16 @@ resource "vcd_global_role" "new-global-role" {
 }
 
 resource "vcd_rights_bundle" "new-rights-bundle" {
- name        = "new-rights-bundle"
- description = "new rights bundle"
- rights = [
-  "Catalog: Add vApp from My Cloud",
-  "Catalog: Edit Properties",
-  "vApp Template / Media: Edit",
-  "vApp Template / Media: View",
-  "Catalog: View Private and Shared Catalogs",
- ]
- publish_to_all_tenants = true
+  name        = "new-rights-bundle"
+  description = "new rights bundle"
+  rights = [
+    "Catalog: Add vApp from My Cloud",
+    "Catalog: Edit Properties",
+    "vApp Template / Media: Edit",
+    "vApp Template / Media: View",
+    "Catalog: View Private and Shared Catalogs",
+  ]
+  publish_to_all_tenants = true
 }
 ```
 
@@ -209,9 +209,9 @@ Examples:
 
 ```hcl
 resource "vcd_global_role" "new-global-role" {
-  name        = "new-global-role"
-  description = "new global role"
-  rights = [ /* rights list goes here */ ]
+  name                   = "new-global-role"
+  description            = "new global role"
+  rights                 = [/* rights list goes here */]
   publish_to_all_tenants = true
 }
 ```
@@ -267,7 +267,7 @@ data "vcd_rights_bundle" "old-rb" {
 resource "vcd_rights_bundle" "new-rb" {
   name                   = "Default Rights Bundle"
   rights                 = data.vcd_rights_bundle.old-rb.rights
-  tenants                = [ "first-org" ]
+  tenants                = ["first-org"]
   publish_to_all_tenants = false
 }
 ```

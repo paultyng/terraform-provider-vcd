@@ -22,8 +22,8 @@ does not support local groups and will return HTTP error 403 "This operation is 
 
 ```hcl
 resource "vcd_org_group" "org1" {
-  org  = "org1"
-  
+  org = "org1"
+
   provider_type = "SAML"
   name          = "Org1-AdminGroup"
   role          = "Organization Administrator"
@@ -34,8 +34,8 @@ resource "vcd_org_group" "org1" {
 
 ```hcl
 resource "vcd_org_group" "org1" {
-  org  = "org1"
-  
+  org = "org1"
+
   provider_type = "INTEGRATED"
   name          = "ldap-group"
   role          = "Organization Administrator"

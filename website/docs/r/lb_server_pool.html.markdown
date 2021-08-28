@@ -67,7 +67,7 @@ resource "vcd_lb_server_pool" "web-servers" {
   algorithm_parameters = "headerName=host"
   enable_transparency  = "true"
 
-  monitor_id = "${data.vcd_lb_service_monitor.web-monitor.id}"
+  monitor_id = data.vcd_lb_service_monitor.web-monitor.id
 
   member {
     condition       = "enabled"

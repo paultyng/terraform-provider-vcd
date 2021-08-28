@@ -20,8 +20,8 @@ reduce the total number of distributed firewall rules to be created.
 
 ```hcl
 data "vcd_nsxt_security_group" "group1" {
-  org  = "my-org"
-  vdc  = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 

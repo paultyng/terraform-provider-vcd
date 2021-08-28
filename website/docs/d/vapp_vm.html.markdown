@@ -17,12 +17,12 @@ Supported in provider *v2.6+*
 ```hcl
 
 data "vcd_vapp" "web" {
-  name= "web"
+  name = "web"
 }
 
 data "vcd_vapp_vm" "web1" {
-  vapp_name     = data.vcd_vapp.web.name
-  name          = "web1"
+  vapp_name = data.vcd_vapp.web.name
+  name      = "web1"
 }
 
 output "vm_id" {

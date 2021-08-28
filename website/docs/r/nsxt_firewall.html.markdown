@@ -17,8 +17,8 @@ outgoing network traffic to and from an NSX-T Data Center Edge Gateway.
 ## Example Usage 1 (Single rule to allow all IPv4 traffic from anywhere to anywhere)
 ```hcl
 resource "vcd_nsxt_firewall" "testing" {
-  org  = "my-org"
-  vdc  = "my-nsxt-vdc"
+  org = "my-org"
+  vdc = "my-nsxt-vdc"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.testing.id
 

@@ -17,7 +17,7 @@ Supported in provider *v2.5+*
 
 ```hcl
 data "vcd_org" "my-org" {
-  name   = "my-org"
+  name = "my-org"
 }
 
 resource "vcd_org" "my-org-clone" {

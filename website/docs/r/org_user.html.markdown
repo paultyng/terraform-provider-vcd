@@ -26,17 +26,17 @@ Supported in provider *v2.4+*
 resource "vcd_org_user" "my-org-admin" {
   org = "my-org"
 
-  name          = "my-org-admin"
-  description   = "a new org admin"
-  role          = "Organization Administrator"
-  password      = "change-me"
+  name        = "my-org-admin"
+  description = "a new org admin"
+  role        = "Organization Administrator"
+  password    = "change-me"
 }
 
 # Another user, created by filling all the fields
 # Uses the "password_file" field.
 resource "vcd_org_user" "test_user_vapp_author" {
   org = "datacloud"
-  
+
   name              = "test_user_vapp_author"
   password_file     = "pwd201907101300.txt"
   full_name         = "test user vapp author"
@@ -57,11 +57,11 @@ resource "vcd_org_user" "test_user_vapp_author" {
 ```hcl
 # A new system administrator
 resource "vcd_org_user" "my-sys-admin" {
-  org           = "System"
-  name          = "my-sys-admin"
-  description   = "a new sys admin"
-  role          = "System Administrator"
-  password      = "change-me-soon"
+  org         = "System"
+  name        = "my-sys-admin"
+  description = "a new sys admin"
+  role        = "System Administrator"
+  password    = "change-me-soon"
 }
 ```
 

@@ -20,8 +20,8 @@ IP address from a public to a private IP address.
 
 ```hcl
 data "vcd_nsxt_nat_rule" "dnat-ssh" {
-  org  = "my-org"
-  vdc  = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 

@@ -44,7 +44,7 @@ data "vcd_vapp" "Vapp-AC-2" {
 
 resource "vcd_vapp_access_control" "AC-not-shared" {
 
-  vapp_id  = data.vcd_vapp.Vapp-AC-0.id
+  vapp_id = data.vcd_vapp.Vapp-AC-0.id
 
   shared_with_everyone = false
 }
@@ -52,16 +52,16 @@ resource "vcd_vapp_access_control" "AC-not-shared" {
 
 resource "vcd_vapp_access_control" "AC-global" {
 
-  vapp_id  = data.vcd_vapp.Vapp-AC-1.id
+  vapp_id = data.vcd_vapp.Vapp-AC-1.id
 
   shared_with_everyone  = true
   everyone_access_level = "Change"
 }
 
 resource "vcd_vapp_access_control" "AC-users" {
-  vapp_id  = data.vcd_vapp.Vapp-AC-2.id
+  vapp_id = data.vcd_vapp.Vapp-AC-2.id
 
-  shared_with_everyone    = false
+  shared_with_everyone = false
 
   shared_with {
     user_id      = data.vcd_org_user.ac-admin1.id
@@ -107,9 +107,9 @@ For example, using this structure, representing an existing access control struc
 
 ```hcl
 resource "vcd_vapp_access_control" "my-ac" {
-  org  = "my-org"
-  vdc  = "my-vdc"
-  
+  org = "my-org"
+  vdc = "my-vdc"
+
   vapp_id = "my-vapp"
 }
 ```

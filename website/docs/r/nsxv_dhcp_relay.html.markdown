@@ -53,25 +53,25 @@ resource "vcd_nsxv_dhcp_relay" "relay_config" {
   }
 
   relay_agent {
-    network_name        = vcd_network_routed.db-network.name
+    network_name       = vcd_network_routed.db-network.name
     gateway_ip_address = "10.201.1.1"
   }
 }
 
 resource "vcd_nsxv_ip_set" "myset1" {
-  org          = "my-org"
-  vdc          = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
-  name                   = "ipset-one"
-  ip_addresses           = ["10.10.10.1/24"]
+  name         = "ipset-one"
+  ip_addresses = ["10.10.10.1/24"]
 }
 
 resource "vcd_nsxv_ip_set" "myset2" {
-  org          = "my-org"
-  vdc          = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
-  name                   = "ipset-two"
-  ip_addresses           = ["20.20.20.1/24"]
+  name         = "ipset-two"
+  ip_addresses = ["20.20.20.1/24"]
 }
 ```
 

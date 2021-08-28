@@ -68,7 +68,7 @@ resource "vcd_vm_internal_disk" "tf-myInternalDisk" {
   org       = "my-org"
   vdc       = "my-vdc"
   vapp_name = "my-vapp"
-  vm_name   = "my-vm" 
+  vm_name   = "my-vm"
 }
 ```
 

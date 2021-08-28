@@ -134,13 +134,13 @@ output "net_list" {
 # Uses the list of networks to get the data source of each
 data "vcd_network_routed" "full_networks" {
   count = length(data.vcd_resource_list.list_of_nets.list)
-  name     = data.vcd_resource_list.list_of_nets.list[count.index]
-  org      = "datacloud"
-  vdc      = "vdc-datacloud"
+  name  = data.vcd_resource_list.list_of_nets.list[count.index]
+  org   = "datacloud"
+  vdc   = "vdc-datacloud"
 }
 
 output "net" {
-    value = data.vcd_network_routed.full_networks
+  value = data.vcd_network_routed.full_networks
 }
 
 # creates a new resource for each data source
@@ -148,11 +148,11 @@ resource "vcd_network_routed" "new_net" {
   count        = length(data.vcd_network_routed.full_networks)
   name         = "${data.vcd_network_routed.full_networks[count.index].name}-2"
   edge_gateway = "${data.vcd_network_routed.full_networks[count.index].edge_gateway}"
-  gateway      = "192.168.${count.index+10}.1"
+  gateway      = "192.168.${count.index + 10}.1"
 
   static_ip_pool {
-    start_address = "10.10.${count.index+10}.152"
-    end_address   = "10.10.${count.index+10}.254"
+    start_address = "10.10.${count.index + 10}.152"
+    end_address   = "10.10.${count.index + 10}.254"
   }
 }
 ```
@@ -227,8 +227,8 @@ output "resource_list" {
 ```hcl
 data "vcd_resource_list" "list_catalog_items" {
   name          = "list_of_catalog_items"
-  resource_type = "vcd_catalog_item" 
-  parent        = "cat-datacloud"      # name of the catalog to be listed
+  resource_type = "vcd_catalog_item"
+  parent        = "cat-datacloud" # name of the catalog to be listed
   list_mode     = "name"
 }
 
@@ -254,8 +254,8 @@ catalog_items = [
 ```hcl
 data "vcd_resource_list" "list_lb_virtual_servers" {
   name          = "list_of_virtual_servers"
-  resource_type = "vcd_lb_virtual_server" 
-  parent        = "gw-datacloud"      # name of the edge gateway to be listed
+  resource_type = "vcd_lb_virtual_server"
+  parent        = "gw-datacloud" # name of the edge gateway to be listed
   list_mode     = "name"
 }
 

@@ -17,9 +17,9 @@ Supported in provider *v2.5+*
 
 ```hcl
 data "vcd_vapp" "test-tf" {
-  name             = "test-tf"
-  org              = "tf"
-  vdc              = "vdc-tf"
+  name = "test-tf"
+  org  = "tf"
+  vdc  = "vdc-tf"
 }
 
 output "id" {

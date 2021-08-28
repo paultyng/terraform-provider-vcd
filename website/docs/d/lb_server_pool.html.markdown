@@ -20,9 +20,9 @@ Supported in provider *v2.4+*
 
 ```hcl
 data "vcd_lb_server_pool" "sp-ds" {
-  org                 = "my-org"
-  vdc                 = "my-org-vdc"
-  edge_gateway        = "my-edge-gw"
+  org          = "my-org"
+  vdc          = "my-org-vdc"
+  edge_gateway = "my-edge-gw"
 
   name = "not-managed"
 }

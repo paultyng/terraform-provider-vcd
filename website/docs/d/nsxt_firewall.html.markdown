@@ -20,8 +20,8 @@ Edge Gateway.
 ## Example Usage (Read a list of firewall rules on Edge Gateway)
 ```hcl
 data "vcd_nsxt_firewall" "testing" {
-  org  = "my-org"
-  vdc  = "my-nsxt-vdc"
+  org = "my-org"
+  vdc = "my-nsxt-vdc"
 
   edge_gateway_id = data.vcd_nsxt_edgegateway.testing.id
 }

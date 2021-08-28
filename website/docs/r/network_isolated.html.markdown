@@ -87,10 +87,10 @@ For example, using this structure, representing an isolated network that was **n
 
 ```hcl
 resource "vcd_network_isolated" "tf-mynet" {
-  name              = "my-net"
-  org               = "my-org"
-  vdc               = "my-vdc"
-  gateway           = "COMPUTE"
+  name    = "my-net"
+  org     = "my-org"
+  vdc     = "my-vdc"
+  gateway = "COMPUTE"
 }
 ```
 

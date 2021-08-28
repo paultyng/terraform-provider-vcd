@@ -16,8 +16,8 @@ Supported in provider *v3.3+*
 
 ```hcl
 data "vcd_role" "vapp-author" {
-  org         = "my-org"
-  name        = "vApp Author"
+  org  = "my-org"
+  name = "vApp Author"
 }
 ```
 ```

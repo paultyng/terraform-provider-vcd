@@ -65,10 +65,10 @@ For example, using this structure, representing a direct network that was **not*
 
 ```hcl
 resource "vcd_network_direct" "tf-mynet" {
-  name              = "my-net"
-  org               = "my-org"
-  vdc               = "my-vdc"
-  external_network  = "COMPUTE"
+  name             = "my-net"
+  org              = "my-org"
+  vdc              = "my-vdc"
+  external_network = "COMPUTE"
 }
 ```
 

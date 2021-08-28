@@ -19,12 +19,12 @@ Supported in provider *v2.5+*
 
 ```hcl
 data "vcd_org_vdc" "my-org-vdc" {
-  org     = "my-org"
-  name    = "my-vdc"
+  org  = "my-org"
+  name = "my-vdc"
 }
 
 output "provider_vdc" {
- value   = data.vcd_org_vdc.my-org-vdc.provider_vdc_name
+  value = data.vcd_org_vdc.my-org-vdc.provider_vdc_name
 }
 
 ```

@@ -149,12 +149,12 @@ resource "vcd_vapp_vm" "internalDiskOverride" {
   cpu_cores     = 1
 
   override_template_disk {
-    bus_type         = "paravirtual"
-    size_in_mb       = "22384"
-    bus_number       = 0
-    unit_number      = 0
-    iops             = 0
-    storage_profile  = "*"
+    bus_type        = "paravirtual"
+    size_in_mb      = "22384"
+    bus_number      = 0
+    unit_number     = 0
+    iops            = 0
+    storage_profile = "*"
   }
 }
 
@@ -184,8 +184,8 @@ resource "vcd_vapp_vm" "TestAccVcdVAppVmDhcpWaitVM" {
 }
 
 resource "vcd_nsxv_ip_set" "test-ipset" {
-  name                   = "ipset-with-dhcp-ip"
-  ip_addresses           = [vcd_vapp_vm.TestAccVcdVAppVmDhcpWaitVM.network.0.ip]
+  name         = "ipset-with-dhcp-ip"
+  ip_addresses = [vcd_vapp_vm.TestAccVcdVAppVmDhcpWaitVM.network.0.ip]
 }
 ```
 
@@ -200,11 +200,11 @@ resource "vcd_vapp_vm" "emptyVM" {
   memory        = 2048
   cpus          = 2
   cpu_cores     = 1
- 
-  os_type = "sles10_64Guest"
+
+  os_type          = "sles10_64Guest"
   hardware_version = "vmx-14"
-  catalog_name  = "my-catalog"
-  boot_image = "myMedia"
+  catalog_name     = "my-catalog"
+  boot_image       = "myMedia"
 }
 
 ```
@@ -232,16 +232,16 @@ This example shows how to create a VM using VM sizing policy.
 
 ```hcl
 data "vcd_vm_sizing_policy" "minSize" {
-	name = "minimum size"
+  name = "minimum size"
 }
 
 resource "vcd_vapp_vm" "secondVM" {
-  vapp_name           = vcd_vapp.web.name
-  name                = "secondVM"
-  computer_name       = "db-vm"
-  catalog_name        = "cat-where-is-template"
-  template_name       = "vappWithMultiVm"
-  sizing_policy_id    = data.vcd_vm_sizing_policy.minSize.id # Specifies which sizing policy to use
+  vapp_name        = vcd_vapp.web.name
+  name             = "secondVM"
+  computer_name    = "db-vm"
+  catalog_name     = "cat-where-is-template"
+  template_name    = "vappWithMultiVm"
+  sizing_policy_id = data.vcd_vm_sizing_policy.minSize.id # Specifies which sizing policy to use
 }
 
 ```
@@ -457,7 +457,7 @@ customization on every `terraform apply` command:
 ```hcl
 resource "vcd_vapp_vm" "web2" {
   #...
-  
+
   network {
     type               = "org"
     name               = "net"
@@ -586,10 +586,10 @@ For example, using this structure, representing a VM that was **not** created us
 
 ```hcl
 resource "vcd_vapp_vm" "tf-vm" {
-  name              = "my-vm"
-  org               = "my-org"
-  vdc               = "my-vdc"
-  vapp_name         = "my-vapp"
+  name      = "my-vm"
+  org       = "my-org"
+  vdc       = "my-vdc"
+  vapp_name = "my-vapp"
 }
 ```
 

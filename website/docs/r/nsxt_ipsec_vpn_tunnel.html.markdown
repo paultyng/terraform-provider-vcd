@@ -26,10 +26,10 @@ resource "vcd_nsxt_ipsec_vpn_tunnel" "tunnel1" {
   name        = "First"
   description = "testing tunnel"
 
-  pre_shared_key    = "my-presharaed-key"
+  pre_shared_key = "my-presharaed-key"
   # Primary IP address of Edge Gateway pulled from data source
-  local_ip_address  = tolist(data.vcd_nsxt_edgegateway.existing_gw.subnet)[0].primary_ip
-  local_networks    = ["10.10.10.0/24", "30.30.30.0/28", "40.40.40.1/32"]
+  local_ip_address = tolist(data.vcd_nsxt_edgegateway.existing_gw.subnet)[0].primary_ip
+  local_networks   = ["10.10.10.0/24", "30.30.30.0/28", "40.40.40.1/32"]
   # That is a fake remote IP address
   remote_ip_address = "1.2.3.4"
   remote_networks   = ["192.168.1.0/24", "192.168.10.0/24", "192.168.20.0/28"]
@@ -48,10 +48,10 @@ resource "vcd_nsxt_ipsec_vpn_tunnel" "tunnel1" {
   name        = "customized-sec-profile"
   description = "IPsec VPN Tunnel with customized security profile"
 
-  pre_shared_key    = "test-psk"
+  pre_shared_key = "test-psk"
   # Primary IP address of Edge Gateway
-  local_ip_address  = tolist(data.vcd_nsxt_edgegateway.existing_gw.subnet)[0].primary_ip
-  local_networks    = ["10.10.10.0/24", "30.30.30.0/28", "40.40.40.1/32"]
+  local_ip_address = tolist(data.vcd_nsxt_edgegateway.existing_gw.subnet)[0].primary_ip
+  local_networks   = ["10.10.10.0/24", "30.30.30.0/28", "40.40.40.1/32"]
   # That is a fake remote IP address as there is nothing else to peer to
   remote_ip_address = "1.2.3.4"
   remote_networks   = ["192.168.1.0/24", "192.168.10.0/24", "192.168.20.0/28"]

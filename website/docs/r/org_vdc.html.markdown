@@ -31,7 +31,7 @@ resource "vcd_org_vdc" "my-vdc" {
   description = "The pride of my work"
   org         = "my-org"
 
-  allocation_model = "ReservationPool"
+  allocation_model  = "ReservationPool"
   network_pool_name = "vDC1-VXLAN-NP"
   provider_vdc_name = "vDC1"
 
@@ -46,16 +46,16 @@ resource "vcd_org_vdc" "my-vdc" {
   }
 
   storage_profile {
-    name     = "storage-name"
-    limit    = 10240
-    default  = true    
+    name    = "storage-name"
+    limit   = 10240
+    default = true
   }
-  
+
   metadata = {
     role    = "customerName"
     env     = "staging"
     version = "v1"
-  }  
+  }
 
   enabled                  = true
   enable_thin_provisioning = true

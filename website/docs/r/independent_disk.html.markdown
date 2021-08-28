@@ -72,8 +72,8 @@ For example, using this structure, representing a independent disk that was **no
 
 ```hcl
 resource "vcd_independent_disk" "tf-myDisk" {
-  vdc     = "my-vdc"
-  name    = "my-disk"
+  vdc  = "my-vdc"
+  name = "my-disk"
 }
 ```
 

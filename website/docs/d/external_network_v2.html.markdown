@@ -25,7 +25,6 @@ Supported in provider *v3.0+*.
 data "vcd_external_network_v2" "ext_net" {
   name = "my-nsxt-net"
 }
-
 ```
 
 ## Argument Reference

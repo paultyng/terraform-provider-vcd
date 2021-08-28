@@ -17,15 +17,15 @@ Supported in provider *v3.2+* and VCD 10.1+ with NSX-T backed VDCs.
 ```hcl
 
 data "vcd_network_routed_v2" "parent" {
-  org  = "my-org"
-  vdc  = "my-vdc"
+  org = "my-org"
+  vdc = "my-vdc"
 
   name = "my-parent-network"
 }
 
 data "vcd_nsxt_network_dhcp" "pools" {
-  org  = "my-org"
-  vdc  = "my-vdc"
+  org = "my-org"
+  vdc = "my-vdc"
 
   org_network_id = vcd_network_routed_v2.parent.id
 }

@@ -44,13 +44,16 @@ saved into a catalog. See Example 7 below.
 When a filter contains multiple clauses, you achieve the overall match only if all the clauses match. For example:
 
 ```hcl
+# TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
 filter {
   name_regex = "^p.*11$"
   date       = "> 2020-02-10"
+
   metadata {
     key   = "key1"
     value = "value1"
   }
+
   metadata {
     key   = "keyABC"
     value = "valueXYZ"
@@ -90,14 +93,14 @@ data "vcd_catalog_item" "unknown" {
 
   org     = "datacloud"
   catalog = "cat-datacloud"
-  
+
   filter {
     name_regex = "^p.*11$"
   }
 }
 
 output "filtered_item" {
-    value = data.vcd_catalog_item.unknown
+  value = data.vcd_catalog_item.unknown
 }
 ```
 
@@ -109,10 +112,9 @@ Note that regular expressions are case-sensitive: `photon-v11` and `Photon-v11` 
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
-  
+
   filter {
     name_regex = "^CentOS"
     latest     = true
@@ -126,15 +128,15 @@ Will find the most recent item where the name starts by `CentOS`.
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
-  
+
   filter {
     date   = ">= 2020-03-20"
     latest = true
   }
 }
+
 # Alternative date conditions for the same value:
 # date = ">= March 23rd, 2020"
 # date = ">= 22-Mar-2020"
@@ -148,14 +150,13 @@ Will find the most recent item created on or after March 23rd, 2020
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
 
   filter {
     metadata {
-     key   = "Code"
-     value = "BlackEagle"
+      key   = "Code"
+      value = "BlackEagle"
     }
   }
 }
@@ -168,20 +169,19 @@ Will fail if the criteria match more than one item.
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
 
   filter {
     metadata {
-     key            = "ONE"
-     value          = "FirstValue"  # explicit value
-     type           = "STRING"
+      key   = "ONE"
+      value = "FirstValue" # explicit value
+      type  = "STRING"
     }
     metadata {
-     key            = "TWO"
-     value          = "SecondValue" # explicit value
-     type           = "STRING"
+      key   = "TWO"
+      value = "SecondValue" # explicit value
+      type  = "STRING"
     }
   }
 }
@@ -195,18 +195,17 @@ Will fail if the criteria match more than one item. Will also fail if only one o
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
 
   filter {
     metadata {
-     key   = "ONE"
-     value = "^First"  # regular expression
+      key   = "ONE"
+      value = "^First" # regular expression
     }
     metadata {
-     key   = "TWO"
-     value = "^S\\w+$" # regular expression
+      key   = "TWO"
+      value = "^S\\w+$" # regular expression
     }
   }
 }
@@ -222,20 +221,19 @@ To match only `cloud`, the value should be specified as `"^cloud$"`.
 
 ```hcl
 data "vcd_catalog_item" "unknown" {
-
   org     = "datacloud"
   catalog = "cat-datacloud"
 
   filter {
     metadata {
-     key       = "vapp.origin.type"
-     value     = "com.vmware.vcloud.entity.vapp"
-     is_system = true
+      key       = "vapp.origin.type"
+      value     = "com.vmware.vcloud.entity.vapp"
+      is_system = true
     }
     metadata {
-     key       = "vapp.origin.name"
-     value     = "my_vapp_name"
-     is_system = true
+      key       = "vapp.origin.name"
+      value     = "my_vapp_name"
+      is_system = true
     }
   }
 }
@@ -258,7 +256,6 @@ data "vcd_catalog" "unknown_cat" {
     earliest = "true"
   }
 }
-
 # Finds an isolated network with gateway IP starting with `192.168.3`
 data "vcd_network_isolated" "unknown_net" {
   org = "datacloud"

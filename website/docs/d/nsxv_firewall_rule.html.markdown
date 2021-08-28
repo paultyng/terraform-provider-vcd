@@ -18,11 +18,11 @@ used to read existing rules by ID and use its attributes in other resources.
 
 ```hcl
 data "vcd_nsxv_firewall_rule" "my-rule" {
-  org                 = "my-org"
-  vdc                 = "my-org-vdc"
-  edge_gateway        = "my-edge-gw"
+  org          = "my-org"
+  vdc          = "my-org-vdc"
+  edge_gateway = "my-edge-gw"
 
-  rule_id = "133048"  # real firewall rule ID, not the UI number
+  rule_id = "133048" # real firewall rule ID, not the UI number
 }
 ```
 

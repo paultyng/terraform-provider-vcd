@@ -18,13 +18,13 @@ Supported in provider *v2.6+*
 
 ```hcl
 resource "vcd_nsxv_ip_set" "test-ipset" {
-  org          = "my-org"
-  vdc          = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
   name                   = "ipset-one"
   is_inheritance_allowed = false
   description            = "test-ip-set-changed-description"
-  ip_addresses           = ["1.1.1.1/24","10.10.10.100-10.10.10.110"]
+  ip_addresses           = ["1.1.1.1/24", "10.10.10.100-10.10.10.110"]
 }
 ```
 
@@ -32,8 +32,8 @@ resource "vcd_nsxv_ip_set" "test-ipset" {
 
 ```hcl
 resource "vcd_nsxv_ip_set" "test-ipset" {
-  name                   = "ipset-two"
-  ip_addresses           = ["192.168.1.1"]
+  name         = "ipset-two"
+  ip_addresses = ["192.168.1.1"]
 }
 ```
 
@@ -41,39 +41,39 @@ resource "vcd_nsxv_ip_set" "test-ipset" {
 
 ```hcl
 resource "vcd_nsxv_ip_set" "test-ipset" {
-  org          = "my-org"
-  vdc          = "my-org-vdc"
+  org = "my-org"
+  vdc = "my-org-vdc"
 
   name                   = "ipset-one"
   is_inheritance_allowed = true
   description            = "test-ip-set-changed-description"
-  ip_addresses           = ["1.1.1.1/24","10.10.10.100-10.10.10.110"]
+  ip_addresses           = ["1.1.1.1/24", "10.10.10.100-10.10.10.110"]
 }
 
 resource "vcd_nsxv_ip_set" "test-ipset2" {
-  name                   = "ipset-two"
-  ip_addresses           = ["192.168.1.1"]
+  name         = "ipset-two"
+  ip_addresses = ["192.168.1.1"]
 }
 
 resource "vcd_nsxv_firewall_rule" "ipsets" {
-	org          = "my-org"
-	vdc          = "my-org-vdc"
-	edge_gateway = "my-edge-gw"
-	
-  name = "rule-with-ipsets"
-	action = "accept"
+  org          = "my-org"
+  vdc          = "my-org-vdc"
+  edge_gateway = "my-edge-gw"
 
-	source {
-		ip_sets = [vcd_nsxv_ip_set.test-ipset.name]
-	}
-  
-	destination {
-		ip_sets = [vcd_nsxv_ip_set.test-ipset2.name]
-	}
+  name   = "rule-with-ipsets"
+  action = "accept"
 
-	service {
-		protocol = "any"
-	}
+  source {
+    ip_sets = [vcd_nsxv_ip_set.test-ipset.name]
+  }
+
+  destination {
+    ip_sets = [vcd_nsxv_ip_set.test-ipset2.name]
+  }
+
+  service {
+    protocol = "any"
+  }
 }
 ```
 

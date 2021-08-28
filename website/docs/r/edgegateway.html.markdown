@@ -24,10 +24,10 @@ resource "vcd_edgegateway" "egw" {
   org = "my-org"
   vdc = "my-vdc"
 
-  name                    = "my-egw"
-  description             = "new edge gateway"
-  configuration           = "compact"
-  
+  name          = "my-egw"
+  description   = "new edge gateway"
+  configuration = "compact"
+
   external_network {
     name = "my-ext-net1"
 
@@ -201,22 +201,21 @@ For example, using this structure, representing an edge gateway that was **not**
 
 ```hcl
 resource "vcd_edgegateway" "tf-edgegateway" {
-  name              = "my-edge-gw"
-  org               = "my-org"
-  vdc               = "my-vdc"
-  configuration     = "COMPUTE"
+  name          = "my-edge-gw"
+  org           = "my-org"
+  vdc           = "my-vdc"
+  configuration = "COMPUTE"
 
   external_network {
-      name = "my-ext-net1"
+    name = "my-ext-net1"
 
-      subnet {
-        ip_address            = "192.168.30.51"
-        gateway               = "192.168.30.49"
-        netmask               = "255.255.255.240"
-        use_for_default_route = true
-      }
+    subnet {
+      ip_address            = "192.168.30.51"
+      gateway               = "192.168.30.49"
+      netmask               = "255.255.255.240"
+      use_for_default_route = true
+    }
   }
-
 }
 ```
 

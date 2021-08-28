@@ -30,7 +30,7 @@ resource "vcd_lb_app_rule" "example-one" {
   org          = "my-org"
   vdc          = "my-org-vdc"
 
-  name = "script1"
+  name   = "script1"
   script = "acl vmware_page url_beg / vmware redirect location https://www.vmware.com/ ifvmware_page"
 }
 ```
@@ -43,11 +43,12 @@ resource "vcd_lb_app_rule" "example-two" {
   org          = "my-org"
   vdc          = "my-org-vdc"
   name         = "script1"
-  script = <<-EOT
+  script       = <<-EOT
     acl vmware_page url_beg / vmware redirect location https://www.vmware.com/ ifvmware_page
     acl other_page2 url_beg / other2 redirect location https://www.other2.com/ ifother_page2
     acl hello payload(0,6) -m bin 48656c6c6f0a
-  EOT
+EOT
+
 }
 ```
 

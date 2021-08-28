@@ -20,8 +20,8 @@ number of distributed firewall rules to be created.
 
 ```hcl
 resource "vcd_nsxt_security_group" "frontend-servers" {
-  org  = "my-org"
-  vdc  = "my-nsxt-vdc"
+  org = "my-org"
+  vdc = "my-nsxt-vdc"
 
   # Referring to a data source for existing NSX-T Edge Gateway
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
@@ -36,13 +36,13 @@ resource "vcd_nsxt_security_group" "frontend-servers" {
 ## Example Usage 2 (Empty Security Group)
 ```hcl
 resource "vcd_nsxt_security_group" "group1" {
-  org  = "my-org"
-  vdc  = "my-nsxt-vdc"
+  org = "my-org"
+  vdc = "my-nsxt-vdc"
 
   # Referring to a data source for existing NSX-T Edge Gateway
   edge_gateway_id = data.vcd_nsxt_edgegateway.existing.id
 
-  name = "precreated security group"
+  name        = "precreated security group"
   description = "Members to be added later"
 }
 ```

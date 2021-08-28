@@ -27,15 +27,15 @@ resource "vcd_lb_virtual_server" "http" {
   org          = "my-org"
   vdc          = "my-org-vdc"
   edge_gateway = "my-edge-gw"
-  
+
   name       = "http-virtual-server"
   ip_address = "1.1.1.1" # Edge gateway uplink interface IP
   protocol   = "http"    # Must be the same as specified in application profile
   port       = 80
-  
-  app_profile_id = "${vcd_lb_app_profile.http.id}"
-  server_pool_id = "${vcd_lb_server_pool.web-servers.id}"
-  app_rule_ids   = ["${vcd_lb_app_rule.redirect.id}", "${vcd_lb_app_rule.language.id}"]
+
+  app_profile_id = vcd_lb_app_profile.http.id
+  server_pool_id = vcd_lb_server_pool.web-servers.id
+  app_rule_ids   = [vcd_lb_app_rule.redirect.id, vcd_lb_app_rule.language.id]
 }
 ```
 
@@ -58,36 +58,36 @@ variable "protocol" {
 }
 
 data "vcd_edgegateway" "mygw" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  name         = "${var.edge_gateway.my-edge-gw}"
+  org  = var.org
+  vdc  = var.vdc
+  name = var.edge_gateway.my-edge-gw
 }
 
 resource "vcd_lb_virtual_server" "http" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  edge_gateway = "${var.edge_gateway}"
+  org          = var.org
+  vdc          = var.vdc
+  edge_gateway = var.edge_gateway
 
   name       = "my-virtual-server"
-  ip_address = "${data.vcd_edgegateway.mygw.default_external_network_ip}"
-  protocol   = "${var.protocol}"
+  ip_address = data.vcd_edgegateway.mygw.default_external_network_ip
+  protocol   = var.protocol
   port       = 8888
 
-  app_profile_id = "${vcd_lb_app_profile.http.id}"
-  server_pool_id = "${vcd_lb_server_pool.web-servers.id}"
-  app_rule_ids   = ["${vcd_lb_app_rule.redirect.id}"]
+  app_profile_id = vcd_lb_app_profile.http.id
+  server_pool_id = vcd_lb_server_pool.web-servers.id
+  app_rule_ids   = [vcd_lb_app_rule.redirect.id]
 }
 
 resource "vcd_lb_service_monitor" "monitor" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  edge_gateway = "${var.edge_gateway}"
+  org          = var.org
+  vdc          = var.vdc
+  edge_gateway = var.edge_gateway
 
   name        = "http-monitor"
   interval    = "5"
   timeout     = "20"
   max_retries = "3"
-  type        = "${var.protocol}"
+  type        = var.protocol
   method      = "GET"
   url         = "/health"
   send        = "{\"key\": \"value\"}"
@@ -98,9 +98,9 @@ resource "vcd_lb_service_monitor" "monitor" {
 }
 
 resource "vcd_lb_server_pool" "web-servers" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  edge_gateway = "${var.edge_gateway}"
+  org          = var.org
+  vdc          = var.vdc
+  edge_gateway = var.edge_gateway
 
   name                 = "web-servers"
   description          = "description"
@@ -108,7 +108,7 @@ resource "vcd_lb_server_pool" "web-servers" {
   algorithm_parameters = "headerName=host"
   enable_transparency  = "true"
 
-  monitor_id = "${vcd_lb_service_monitor.monitor.id}"
+  monitor_id = vcd_lb_service_monitor.monitor.id
 
   member {
     condition       = "enabled"
@@ -134,18 +134,18 @@ resource "vcd_lb_server_pool" "web-servers" {
 }
 
 resource "vcd_lb_app_profile" "http" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  edge_gateway = "${var.edge_gateway}"
+  org          = var.org
+  vdc          = var.vdc
+  edge_gateway = var.edge_gateway
 
   name = "http-app-profile"
-  type = "${var.protocol}"
+  type = var.protocol
 }
 
 resource "vcd_lb_app_rule" "redirect" {
-  org          = "${var.org}"
-  vdc          = "${var.vdc}"
-  edge_gateway = "${var.edge_gateway}"
+  org          = var.org
+  vdc          = var.vdc
+  edge_gateway = var.edge_gateway
 
   name   = "redirect"
   script = "acl vmware_page url_beg / vmware redirect location https://www.vmware.com/ ifvmware_page"

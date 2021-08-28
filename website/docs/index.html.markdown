@@ -113,8 +113,8 @@ provider "vcd" {
   password             = var.vcd_pass
   auth_type            = "integrated"
   sysorg               = "System"
-  org                  = var.vcd_org                  # Default for resources
-  vdc                  = var.vcd_vdc                  # Default for resources
+  org                  = var.vcd_org # Default for resources
+  vdc                  = var.vcd_vdc # Default for resources
   url                  = var.vcd_url
   max_retry_timeout    = var.vcd_max_retry_timeout
   allow_unverified_ssl = var.vcd_allow_unverified_ssl
@@ -143,8 +143,8 @@ provider "vcd" {
   auth_type            = "token"
   token                = var.token
   sysorg               = "System"
-  org                  = var.vcd_org                  # Default for resources
-  vdc                  = var.vcd_vdc                  # Default for resources
+  org                  = var.vcd_org # Default for resources
+  vdc                  = var.vcd_vdc # Default for resources
   url                  = var.vcd_url
   max_retry_timeout    = var.vcd_max_retry_timeout
   allow_unverified_ssl = var.vcd_allow_unverified_ssl
@@ -202,14 +202,14 @@ Take special attention to `user`, `use_saml_adfs` and `saml_rpt_id` fields.
 ```hcl
 # Configure the VMware Cloud Director Provider
 provider "vcd" {
-  user                 = "test@contoso.com"
-  password             = var.vcd_pass
-  sysorg               = "my-org"
-  auth_type            = "saml_adfs"
+  user      = "test@contoso.com"
+  password  = var.vcd_pass
+  sysorg    = "my-org"
+  auth_type = "saml_adfs"
   # If `saml_adfs_rpt_id` is not specified - VCD SAML Entity ID will be used automatically
   saml_adfs_rpt_id     = "my-custom-rpt-id"
-  org                  = var.vcd_org                  # Default for resources
-  vdc                  = var.vcd_vdc                  # Default for resources
+  org                  = var.vcd_org # Default for resources
+  vdc                  = var.vcd_vdc # Default for resources
   url                  = var.vcd_url
   max_retry_timeout    = var.vcd_max_retry_timeout
   allow_unverified_ssl = var.vcd_allow_unverified_ssl

@@ -16,7 +16,7 @@ Supported in provider *v3.2+*
 
 ```hcl
 resource "vcd_vm" "TestVm" {
-  name          = "TestVm"
+  name = "TestVm"
 
   catalog_name  = "cat-datacloud"
   template_name = "photon-hw11"
@@ -54,9 +54,9 @@ General notes:
 For example, given this input
 ```hcl
 resource "vcd_vm" "TestVm" {
-  org           = "datacloud"
-  vdc           = "vdc-datacloud"
-  name          = "TestVm"
+  org  = "datacloud"
+  vdc  = "vdc-datacloud"
+  name = "TestVm"
 }
 ```
 
