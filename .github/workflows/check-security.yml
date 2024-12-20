@@ -1,5 +1,13 @@
 name: Run Gosec
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'website/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'website/**'
 jobs:
   gosec:
     runs-on: ubuntu-latest

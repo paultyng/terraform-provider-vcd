@@ -26,9 +26,9 @@ data "vcd_role" "vapp_author" {
 }
 
 resource "vcd_service_account" "example_service" {
-  org  = "my-org"
-  name = "example"
-  role = data.vcd_role.vapp_author.id
+  org     = "my-org"
+  name    = "example"
+  role_id = data.vcd_role.vapp_author.id
 
   software_id      = "12345678-1234-1234-1234-1234567890ab"
   software_version = "1.0.0"
@@ -49,7 +49,7 @@ The following arguments are supported:
 * `org` - (Optional) The name of organization to use, optional if defined at provider level. Useful
   when connected as sysadmin working across different organisations.
 * `name` - (Required) A unique name for the Service Account in an organisation.
-* `role` - (Required) ID of a Role.
+* `role_id` - (Required) ID of a Role.
 * `software_id` - (Required) UUID of the Service Account.
 * `software_version` - (Optional) Version of the service using the Service Account
 * `uri` - (Optional) URI of the service using the Service Account
