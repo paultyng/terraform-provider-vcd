@@ -58,7 +58,7 @@ func TestAccVcdTmContentLibraryItem(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "is_published", "false"),
 					resource.TestCheckResourceAttrSet(resourceName, "image_identifier"),
 					resource.TestMatchResourceAttr(resourceName, "owner_org_id", regexp.MustCompile("urn:vcloud:org:")),
-					resource.TestCheckResourceAttr(resourceName, "status", ""),
+					resource.TestCheckResourceAttr(resourceName, "status", "READY"),
 					resource.TestCheckResourceAttr(resourceName, "last_successful_sync", ""),
 					resource.TestCheckResourceAttr(resourceName, "version", "1"),
 				),
