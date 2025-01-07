@@ -1497,15 +1497,15 @@ resource "vcd_org_vdc" "sizing-policy" {
   allocation_model  = "{{.AllocationModel}}"
   network_pool_name = "{{.NetworkPool}}"
   provider_vdc_name = "{{.ProviderVdc}}"
+  memory_guaranteed = 1
+  cpu_guaranteed    = 1
 
   compute_capacity {
     cpu {
-      allocated = "{{.Allocated}}"
       limit     = "{{.Limit}}"
     }
 
     memory {
-      allocated = "{{.Allocated}}"
       limit     = "{{.Limit}}"
     }
   }
@@ -1739,7 +1739,7 @@ func TestAccVcdVAppVm_4types_sizing_max(t *testing.T) {
 
 		"AllocationModel":           "Flex",
 		"Allocated":                 "40000",
-		"Reserved":                  "0",
+		"Reserved":                  "40000",
 		"Limit":                     "40000",
 		"ProviderVdcStorageProfile": testConfig.VCD.ProviderVdc.StorageProfile,
 		"FuncName":                  t.Name(),
@@ -2053,7 +2053,7 @@ func TestAccVcdVAppVm_4types_sizing_cpu_only(t *testing.T) {
 
 		"AllocationModel":           "Flex",
 		"Allocated":                 "30000",
-		"Reserved":                  "0",
+		"Reserved":                  "30000",
 		"Limit":                     "32000",
 		"ProviderVdcStorageProfile": testConfig.VCD.ProviderVdc.StorageProfile,
 		"FuncName":                  t.Name(),

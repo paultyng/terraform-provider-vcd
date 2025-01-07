@@ -38,7 +38,7 @@ func TestAccVcdVmPlacementPolicy(t *testing.T) {
 		t.Skip(acceptanceTestsSkipped)
 	}
 	vmPlacementPolicyDescription := "This is a system generated default compute policy auto assigned to this vDC."
-	if vcdClient.Client.APIVCDMaxVersionIs("< 38.0") {
+	if vcdClient.Client.APIVCDMaxVersionIs("< 38.0") || vcdClient.Client.APIVCDMaxVersionIs("> 39.0") {
 		vmPlacementPolicyDescription = ""
 	}
 
@@ -360,7 +360,7 @@ func TestAccVcdVmPlacementPolicyWithoutDescription(t *testing.T) {
 		t.Skip(acceptanceTestsSkipped)
 	}
 	vmPlacementPolicyDescription := "This is a system generated default compute policy auto assigned to this vDC."
-	if vcdClient.Client.APIVCDMaxVersionIs("< 38.0") {
+	if vcdClient.Client.APIVCDMaxVersionIs("< 38.0") || vcdClient.Client.APIVCDMaxVersionIs("> 39.0") {
 		vmPlacementPolicyDescription = ""
 	}
 

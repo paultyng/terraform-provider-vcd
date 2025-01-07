@@ -42,7 +42,7 @@ func TestAccVcdStandaloneVmWithVmSizing(t *testing.T) {
 		"ProviderVdc":               testConfig.VCD.NsxtProviderVdc.Name,
 		"NetworkPool":               testConfig.VCD.NsxtProviderVdc.NetworkPool,
 		"Allocated":                 "10240",
-		"Reserved":                  "0",
+		"Reserved":                  "10240",
 		"Limit":                     "10240",
 		"ProviderVdcStorageProfile": testConfig.VCD.NsxtProviderVdc.StorageProfile,
 		"FuncName":                  t.Name(),
@@ -287,15 +287,15 @@ resource "vcd_org_vdc" "{{.VdcName}}" {
   allocation_model  = "{{.AllocationModel}}"
   network_pool_name = "{{.NetworkPool}}"
   provider_vdc_name = "{{.ProviderVdc}}"
+  memory_guaranteed = 1
+  cpu_guaranteed    = 1
 
   compute_capacity {
     cpu {
-      allocated = "{{.Allocated}}"
       limit     = "{{.Limit}}"
     }
 
     memory {
-      allocated = "{{.Allocated}}"
       limit     = "{{.Limit}}"
     }
   }
