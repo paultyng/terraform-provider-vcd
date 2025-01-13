@@ -23,7 +23,7 @@ func TestAccVcdTmContentLibrary(t *testing.T) {
 	var params = StringMap{
 		"Name":                t.Name(),
 		"RegionId":            fmt.Sprintf("%s.id", regionHclRef),
-		"RegionStoragePolicy": testConfig.Tm.RegionStoragePolicy,
+		"RegionStoragePolicy": testConfig.Tm.StorageClass,
 		"Tags":                "tm",
 	}
 	testParamsNotEmpty(t, params)
@@ -39,16 +39,24 @@ func TestAccVcdTmContentLibrary(t *testing.T) {
 
 	configText1 := templateFill(preRequisites+testAccVcdTmContentLibraryStep1, params)
 	params["FuncName"] = t.Name() + "-step2"
-	configText2 := templateFill(preRequisites+testAccVcdTmContentLibraryStep2, params)
+	params["Name"] = t.Name() + "Updated"
+	configText2 := templateFill(preRequisites+testAccVcdTmContentLibraryStep1, params)
+	params["FuncName"] = t.Name() + "-step3"
+	configText3 := templateFill(preRequisites+testAccVcdTmContentLibraryStep3, params)
 
 	debugPrintf("#[DEBUG] CONFIGURATION step1: %s\n", configText1)
 	debugPrintf("#[DEBUG] CONFIGURATION step2: %s\n", configText2)
+	debugPrintf("#[DEBUG] CONFIGURATION step3: %s\n", configText3)
 	if vcdShortTest {
 		t.Skip(acceptanceTestsSkipped)
 		return
 	}
 
 	resourceName := "vcd_tm_content_library.cl"
+	dsRegionStoragePolicy := "data.vcd_tm_region_storage_policy.sp"
+	dsStorageClass := "data.vcd_tm_storage_class.sc"
+
+	cachedId := &testCachedFieldValue{}
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
@@ -59,6 +67,23 @@ func TestAccVcdTmContentLibrary(t *testing.T) {
 			{
 				Config: configText1,
 				Check: resource.ComposeTestCheckFunc(
+					// Region Storage Policy
+					resource.TestCheckResourceAttr(dsRegionStoragePolicy, "name", testConfig.Tm.StorageClass),
+					resource.TestCheckResourceAttrPair(dsRegionStoragePolicy, "region_id", regionHclRef, "id"),
+					resource.TestMatchResourceAttr(dsRegionStoragePolicy, "description", regexp.MustCompile(`.*`)),
+					resource.TestCheckResourceAttr(dsRegionStoragePolicy, "status", ""),
+					resource.TestCheckResourceAttrSet(dsRegionStoragePolicy, "storage_capacity_mb"),
+					resource.TestCheckResourceAttrSet(dsRegionStoragePolicy, "storage_consumed_mb"),
+
+					// Storage Class
+					resource.TestCheckResourceAttr(dsStorageClass, "name", testConfig.Tm.StorageClass),
+					resource.TestCheckResourceAttrPair(dsStorageClass, "region_id", regionHclRef, "id"),
+					resource.TestCheckResourceAttrSet(dsStorageClass, "storage_capacity_mib"),
+					resource.TestCheckResourceAttrSet(dsStorageClass, "storage_consumed_mib"),
+					resource.TestMatchResourceAttr(dsStorageClass, "zone_ids.#", regexp.MustCompile("[0-9]+")),
+
+					// Content Library
+					cachedId.cacheTestResourceFieldValue(resourceName, "id"),
 					resource.TestCheckResourceAttr(resourceName, "name", t.Name()),
 					resource.TestCheckResourceAttr(resourceName, "description", t.Name()),
 					resource.TestCheckResourceAttr(resourceName, "storage_class_ids.#", "1"),
@@ -74,6 +99,13 @@ func TestAccVcdTmContentLibrary(t *testing.T) {
 			},
 			{
 				Config: configText2,
+				Check: resource.ComposeTestCheckFunc(
+					cachedId.testCheckCachedResourceFieldValue(resourceName, "id"),
+					resource.TestCheckResourceAttr(resourceName, "name", t.Name()+"Updated"),
+				),
+			},
+			{
+				Config: configText3,
 				Check: resource.ComposeTestCheckFunc(
 					resourceFieldsEqual(resourceName, "data.vcd_tm_content_library.cl_ds", nil),
 				),
@@ -96,16 +128,21 @@ data "vcd_tm_region_storage_policy" "sp" {
   name      = "{{.RegionStoragePolicy}}"
 }
 
+data "vcd_tm_storage_class" "sc" {
+  region_id = {{.RegionId}}
+  name      = "{{.RegionStoragePolicy}}"
+}
+
 resource "vcd_tm_content_library" "cl" {
   name = "{{.Name}}"
   description = "{{.Name}}"
   storage_class_ids = [
-    data.vcd_tm_region_storage_policy.sp.id
+    data.vcd_tm_storage_class.sc.id
   ]
 }
 `
 
-const testAccVcdTmContentLibraryStep2 = testAccVcdTmContentLibraryStep1 + `
+const testAccVcdTmContentLibraryStep3 = testAccVcdTmContentLibraryStep1 + `
 data "vcd_tm_content_library" "cl_ds" {
   name = vcd_tm_content_library.cl.name
 }

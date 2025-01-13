@@ -127,11 +127,11 @@ func getContentLibraryHcl(t *testing.T, regionHclRef string) (string, string) {
 	if testConfig.Tm.ContentLibrary == "" {
 		t.Fatalf("the property tm.contentLibrary is required but it is not present in testing JSON")
 	}
-	if testConfig.Tm.RegionStoragePolicy == "" {
-		t.Fatalf("the property tm.regionStoragePolicy is required but it is not present in testing JSON")
+	if testConfig.Tm.StorageClass == "" {
+		t.Fatalf("the property tm.storageClass is required but it is not present in testing JSON")
 	}
 	vcdClient := createTemporaryVCDConnection(false)
-	cl, err := vcdClient.GetContentLibraryByName(testConfig.Tm.ContentLibrary)
+	cl, err := vcdClient.GetContentLibraryByName(testConfig.Tm.ContentLibrary, nil)
 	if err == nil {
 		return `
 data "vcd_tm_content_library" "content_library" {
@@ -144,15 +144,15 @@ data "vcd_tm_content_library" "content_library" {
 		return "", ""
 	}
 	return `
-data "vcd_tm_region_storage_policy" "region_storage_policy" {
+data "vcd_tm_storage_class" "storage_class" {
   region_id = ` + regionHclRef + `.id 
-  name      = "` + testConfig.Tm.RegionStoragePolicy + `"
+  name      = "` + testConfig.Tm.StorageClass + `"
 }
 
 resource "vcd_tm_content_library" "content_library" {
   name                 = "` + testConfig.Tm.ContentLibrary + `"
   description          = "` + testConfig.Tm.ContentLibrary + `"
-  storage_class_ids    = [data.vcd_tm_region_storage_policy.region_storage_policy.id]
+  storage_class_ids    = [data.vcd_tm_storage_class.storage_class.id]
 }
 `, "vcd_tm_content_library.content_library"
 }

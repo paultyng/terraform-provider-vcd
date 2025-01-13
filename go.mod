@@ -69,3 +69,5 @@ require (
 	google.golang.org/grpc v1.63.2 // indirect
 	google.golang.org/protobuf v1.34.0 // indirect
 )
+
+replace github.com/vmware/go-vcloud-director/v3 => github.com/adambarreiro/go-vcloud-director/v3 v3.0.0-20250110135331-aadb351b910d

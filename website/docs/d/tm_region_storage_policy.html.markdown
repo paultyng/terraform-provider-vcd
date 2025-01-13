@@ -3,16 +3,17 @@ layout: "vcd"
 page_title: "VMware Cloud Foundation Tenant Manager: vcd_tm_region_storage_policy"
 sidebar_current: "docs-vcd-data-source-tm-region-storage-policy"
 description: |-
-  Provides a VMware Cloud Foundation Tenant Manager Region Storage Policy data source. This can be used to read Content Libraries.
+  Provides a VMware Cloud Foundation Tenant Manager data source to read Region Storage Policies.
 ---
 
 # vcd\_tm\_region\_storage\_policy
 
-// TODO: TM: Check whether this finally changes to Region Storage Class
-
-Provides a VMware Cloud Foundation Tenant Manager Region Storage Policy data source. This can be used to read Region Storage Policies.
+Provides a VMware Cloud Foundation Tenant Manager data source to read Region Storage Policies.
 
 This data source is exclusive to **VMware Cloud Foundation Tenant Manager**. Supported in provider *v4.0+*
+
+-> To retrieve Storage Classes, use the [`vcd_tm_storage_class`](/providers/vmware/vcd/latest/docs/data-sources/tm_storage_class)
+data source instead
 
 ## Example Usage
 
@@ -26,12 +27,8 @@ data "vcd_tm_region_storage_policy" "sp" {
   name      = "vSAN Default Storage Policy"
 }
 
-resource "vcd_tm_content_library" "cl" {
-  name        = "My Library"
-  description = "A simple library"
-  storage_policy_ids = [
-    data.vcd_tm_region_storage_policy.sp.id
-  ]
+output "policy_id" {
+  value = data.vcd_tm_region_storage_policy.sp.id
 }
 ```
 

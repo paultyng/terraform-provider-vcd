@@ -19,7 +19,7 @@ data "vcd_tm_region" "region" {
   name = "My Region"
 }
 
-data "vcd_tm_region_storage_policy" "sp" {
+data "vcd_tm_storage_class" "sc" {
   region_id = data.vcd_tm_region.region.id
   name      = "vSAN Default Storage Policy"
 }
@@ -28,7 +28,7 @@ resource "vcd_tm_content_library" "cl" {
   name        = "My Library"
   description = "A simple library"
   storage_class_ids = [
-    data.vcd_tm_region_storage_policy.sp.id
+    data.vcd_tm_storage_class.sc.id
   ]
 }
 ```
@@ -42,9 +42,7 @@ resource "vcd_tm_content_library" "cl" {
 The following arguments are supported:
 
 * `name` - (Required) The name of the Content Library
-
-// TODO: TM: Check whether this finally changes to Region Storage Class:
-* `storage_class_ids` - (Required) A set of [Storage Class IDs](/providers/vmware/vcd/latest/docs/data-sources/tm_region_storage_policy) used by this Content Library
+* `storage_class_ids` - (Required) A set of [Storage Class IDs](/providers/vmware/vcd/latest/docs/data-sources/tm_storage_class) used by this Content Library
 * `auto_attach` - (Optional) Defaults to `true`. For Tenant Content Libraries this field represents whether this Content Library should be
   automatically attached to all current and future namespaces in the tenant organization. If a value of `false` is supplied, then this
   Tenant Content Library will only be attached to namespaces that explicitly request it. For Provider Content Libraries this field is not needed

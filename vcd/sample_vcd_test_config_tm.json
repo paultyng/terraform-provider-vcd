@@ -43,7 +43,7 @@
     "org": "tf-test",
     "createRegion": true,
     "region": "one-region",
-    "regionStoragePolicy": "vSAN Default Storage Policy",
+    "storageClass": "vSAN Default Storage Policy",
     "vdc": "one-vdc",
     "contentLibrary": "content-library-one",
 

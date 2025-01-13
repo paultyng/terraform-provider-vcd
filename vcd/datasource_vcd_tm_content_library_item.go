@@ -53,7 +53,8 @@ func datasourceVcdTmContentLibraryItem() *schema.Resource {
 				Description: fmt.Sprintf("The ISO-8601 timestamp representing when this %s was last synced if subscribed", labelTmContentLibraryItem),
 			},
 			"owner_org_id": {
-				Type:        schema.TypeString,
+				Type: schema.TypeString,
+				// TODO: TM: This should be optional: Either Provider or Tenant can create CLs
 				Computed:    true,
 				Description: fmt.Sprintf("The reference to the organization that the %s belongs to", labelTmContentLibraryItem),
 			},
@@ -74,7 +75,8 @@ func datasourceVcdTmContentLibraryItem() *schema.Resource {
 func datasourceTmContentLibraryItemRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	vcdClient := meta.(*VCDClient)
 
-	cl, err := vcdClient.GetContentLibraryById(d.Get("content_library_id").(string))
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryById(d.Get("content_library_id").(string), nil)
 	if err != nil {
 		return diag.Errorf("error retrieving Content Library: %s", err)
 	}

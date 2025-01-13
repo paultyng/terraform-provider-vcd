@@ -104,7 +104,8 @@ func resourceVcdTmContentLibraryItemCreate(ctx context.Context, d *schema.Resour
 	vcdClient := meta.(*VCDClient)
 
 	clId := d.Get("content_library_id").(string)
-	cl, err := vcdClient.GetContentLibraryById(clId)
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryById(clId, nil)
 	if err != nil {
 		return diag.Errorf("could not retrieve Content Library with ID '%s': %s", clId, err)
 	}
@@ -152,7 +153,8 @@ func resourceVcdTmContentLibraryItemRead(ctx context.Context, d *schema.Resource
 	vcdClient := meta.(*VCDClient)
 
 	clId := d.Get("content_library_id").(string)
-	cl, err := vcdClient.GetContentLibraryById(clId)
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryById(clId, nil)
 	if err != nil {
 		return diag.Errorf("could not retrieve Content Library with ID '%s': %s", clId, err)
 	}
@@ -169,7 +171,8 @@ func resourceVcdTmContentLibraryItemDelete(ctx context.Context, d *schema.Resour
 	vcdClient := meta.(*VCDClient)
 
 	clId := d.Get("content_library_id").(string)
-	cl, err := vcdClient.GetContentLibraryById(clId)
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryById(clId, nil)
 	if err != nil {
 		return diag.Errorf("could not retrieve Content Library with ID '%s': %s", clId, err)
 	}
@@ -190,7 +193,8 @@ func resourceVcdTmContentLibraryItemImport(_ context.Context, d *schema.Resource
 		return nil, fmt.Errorf("ID syntax should be \"Content Library name\".\"Content Library Item name\", where '.' is a customisable import separator")
 	}
 
-	cl, err := vcdClient.GetContentLibraryByName(id[0])
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryByName(id[0], nil)
 	if err != nil {
 		return nil, fmt.Errorf("error getting Content Library with name '%s' for import: %s", id[0], err)
 	}

@@ -3,8 +3,6 @@ package vcd
 import (
 	"context"
 	"fmt"
-	"strings"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/vmware/go-vcloud-director/v3/govcd"
@@ -24,13 +22,11 @@ func resourceVcdTmContentLibrary() *schema.Resource {
 			"name": {
 				Type:        schema.TypeString,
 				Required:    true,
-				ForceNew:    true, // TODO: TM: Update not supported
 				Description: "The name of the Content Library",
 			},
 			"storage_class_ids": {
 				Type:        schema.TypeSet,
 				Required:    true,
-				ForceNew:    true, // TODO: TM: Update not supported
 				Description: "A set of storage class IDs used by this Content Library",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -56,7 +52,6 @@ func resourceVcdTmContentLibrary() *schema.Resource {
 			"description": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				ForceNew:    true, // TODO: TM: Update not supported
 				Description: "The description of the Content Library",
 			},
 			"is_shared": {
@@ -76,7 +71,8 @@ func resourceVcdTmContentLibrary() *schema.Resource {
 					"provider) or TENANT (Content Library that is scoped to a tenant organization)",
 			},
 			"owner_org_id": {
-				Type:        schema.TypeString,
+				Type: schema.TypeString,
+				// TODO: TM: This should be optional: Either Provider or Tenant can create CLs
 				Computed:    true,
 				Description: "The reference to the Organization that the Content Library belongs to",
 			},
@@ -84,26 +80,24 @@ func resourceVcdTmContentLibrary() *schema.Resource {
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
+				ForceNew:    true, // Can't change subscription settings
 				Description: "A block representing subscription settings of a Content Library",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"subscription_url": {
 							Type:        schema.TypeString,
 							Required:    true,
-							ForceNew:    true, // TODO: TM: Update not supported
 							Description: "Subscription url of this Content Library",
 						},
 						"password": {
 							Type:        schema.TypeString,
 							Optional:    true, // Required at Runtime as cannot be Required + Computed in schema. (It is computed as password cannot be recovered)
 							Computed:    true,
-							ForceNew:    true, // TODO: TM: Update not supported
 							Description: "Password to use to authenticate with the publisher",
 						},
 						"need_local_copy": {
 							Type:        schema.TypeBool,
 							Optional:    true,
-							ForceNew:    true, // TODO: TM: Update not supported
 							Description: "Whether to eagerly download content from publisher and store it locally",
 						},
 					},
@@ -126,7 +120,8 @@ func resourceVcdTmContentLibraryCreate(ctx context.Context, d *schema.ResourceDa
 		return diag.Errorf("error getting Content Library type: %s", err)
 	}
 
-	cl, err := vcdClient.CreateContentLibrary(t)
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.CreateContentLibrary(t, nil)
 	if err != nil {
 		return diag.Errorf("error creating Content Library: %s", err)
 	}
@@ -138,7 +133,8 @@ func resourceVcdTmContentLibraryCreate(ctx context.Context, d *schema.ResourceDa
 
 func resourceVcdTmContentLibraryUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	vcdClient := meta.(*VCDClient)
-	rsp, err := vcdClient.GetContentLibraryById(d.Id())
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	rsp, err := vcdClient.GetContentLibraryById(d.Id(), nil)
 	if err != nil {
 		return diag.Errorf("error retrieving Content Library: %s", err)
 	}
@@ -164,10 +160,11 @@ func genericVcdTmContentLibraryRead(_ context.Context, d *schema.ResourceData, m
 
 	var cl *govcd.ContentLibrary
 	var err error
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
 	if d.Id() != "" {
-		cl, err = vcdClient.GetContentLibraryById(d.Id())
+		cl, err = vcdClient.GetContentLibraryById(d.Id(), nil)
 	} else {
-		cl, err = vcdClient.GetContentLibraryByName(d.Get("name").(string))
+		cl, err = vcdClient.GetContentLibraryByName(d.Get("name").(string), nil)
 	}
 	if err != nil {
 		if origin == "resource" && govcd.ContainsNotFound(err) {
@@ -188,12 +185,14 @@ func genericVcdTmContentLibraryRead(_ context.Context, d *schema.ResourceData, m
 
 func resourceVcdTmContentLibraryDelete(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	vcdClient := meta.(*VCDClient)
-	cl, err := vcdClient.GetContentLibraryById(d.Id())
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	cl, err := vcdClient.GetContentLibraryById(d.Id(), nil)
 	if err != nil {
 		return diag.Errorf("error retrieving Content Library: %s", err)
 	}
 
-	err = cl.Delete()
+	// TODO: TM: Add two new arguments "force_delete" and "delete_recursive"
+	err = cl.Delete(true, true)
 	if err != nil {
 		return diag.Errorf("error deleting Content Library: %s", err)
 	}
@@ -203,7 +202,8 @@ func resourceVcdTmContentLibraryDelete(_ context.Context, d *schema.ResourceData
 
 func resourceVcdTmContentLibraryImport(_ context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	vcdClient := meta.(*VCDClient)
-	rsp, err := vcdClient.GetContentLibraryByName(d.Id())
+	// TODO: TM: Tenant Context should not be nil and depend on the configured owner_org_id
+	rsp, err := vcdClient.GetContentLibraryByName(d.Id(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("error retrieving Content Library with name '%s': %s", d.Id(), err)
 	}
@@ -246,8 +246,7 @@ func setTmContentLibraryData(d *schema.ResourceData, cl *types.ContentLibrary) e
 
 	scs := make([]string, len(cl.StorageClasses))
 	for i, sc := range cl.StorageClasses {
-		// TODO: TM: When vcd_region_storage_policy data source starts using :storageClass: UUID, we can get rid of this
-		scs[i] = strings.ReplaceAll(sc.ID, "storageClass", "regionStoragePolicy")
+		scs[i] = sc.ID
 	}
 	err := d.Set("storage_class_ids", scs)
 	if err != nil {

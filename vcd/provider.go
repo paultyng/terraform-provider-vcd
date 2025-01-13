@@ -177,6 +177,7 @@ var globalDataSourceMap = map[string]*schema.Resource{
 	"vcd_nsxt_alb_virtual_service_http_sec_rules":      datasourceVcdAlbVirtualServiceSecRules(),               // 3.14
 	"vcd_tm_org":                                       datasourceVcdTmOrg(),                                   // 4.0
 	"vcd_tm_region_storage_policy":                     datasourceVcdTmRegionStoragePolicy(),                   // 4.0
+	"vcd_tm_storage_class":                             datasourceVcdTmStorageClass(),                          // 4.0
 	"vcd_tm_content_library":                           datasourceVcdTmContentLibrary(),                        // 4.0
 	"vcd_tm_supervisor":                                datasourceVcdTmSupervisor(),                            // 4.0
 	"vcd_tm_supervisor_zone":                           datasourceVcdTmSupervisorZone(),                        // 4.0
